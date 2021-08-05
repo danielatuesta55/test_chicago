@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset= "utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Beach Analysis</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <!-- Full Page Js CSS -->
+	<link rel="stylesheet" type="text/css" href="../static/css/fullpage.css" />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src='https://cdn.plot.ly/plotly-2.1.0.min.js'></script>
+    <link rel="icon" href="../Resources/favicon.ico" />
+</head>
+<body>
+<div id="fullpage">
+	<div class="section active" id="section0">
+        <div class="col-lg-6 mx-auto">
+            <h1>E. coli and Beach Safety</h1>
+            <h3>How Are They Connected and Can We Predict Safety?</h3>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="#secondPage" class="btn btn-primary">Workflow Discussion</a>
+                <a href="#3rdPage" class="btn btn-primary">Model Analysis</a>
+                <a href="#5thPage" class="btn btn-primary">Data Sources</a>
+                <a href="https://www.chicagoriver.org/issues/policy/climate-change" class="btn btn-primary" target="=_blank">Chicago River</a>
+                <a href="https://www.nytimes.com/interactive/2021/07/07/climate/chicago-river-lake-michigan.html" class="btn btn-primary" target="=_blank">Lake Michigan</a>
+              </div>
+        </div>
+    </div>
+    <div class="section" id="section1">
+	    <div class="slide active">
+            <div class = "col-lg-10 mx-auto">
+                <div class = "row"><h2 style="text-align:center">'</h2></div>
+                <br>
+                <div class = "row">
+                    <h3 style="text-align: center;">
+                        ...while annual average precipitation may not change much, the state may grow
+                        drier overall because rainfall cannot compensate for the drying effects of
+                        a warmer climate.
+                    </h3>
+                </div>
+                <br>
+                <div class = "row"><h2 style="text-align:center">'</h2></div>  
+            </div>
+        </div>
+	    <div class="slide">
+            <div class = "col-lg-10 mx-auto" id = "discussion">
+                <div class = "row"><h1>A Look at the Final Dataframe</h1></div>
+                <div class = "row">
+                    <div class = "col-lg-12">
+                        <br>
+                        <img src="../Resources/final_df.png" alt="Final Dataframe">
+                    </div>
+                </div>  
+            </div>
+        </div>
+        <div class="slide">
+            <div class = "col-lg-10 mx-auto" id = "discussion">
+                <div class = "row"><h2 style="text-align:center">'</h2></div>
+                <br>
+                <div class = "row">
+                    <h3 style="text-align: center;">
+                        nytimes quote
+                    </h3>
+                </div>
+                <br>
+                <div class = "row"><h2 style="text-align:center">'</h2></div>  
+            </div>
+        </div>
+        <div class="slide">
+            <div class = "col-md-10 mx-auto" id = "discussion">
+                <div class = "row"><h1>Machine Learning Model Output</h1></div>
+                <br>
+                <div class = "row">
+                    <img src= "../Resources/Model.png" alt="Model Plot" height="510px">
+                </div>  
+            </div>
+        </div>
+    </div>
+    <div class="section" id="section2">
+        <div class="row">
+            <h1 style="text-align: center;">Is It A Good Beach Day?</h1>
+            <h3 style="text-align: center;">Input Your Own Data to Predict Beach Safety!</h3>
+            <div class="container">
+                <div class="row">
+                    <div style = "margin-left:20px;" class="col-md-offset-2 col-md-6">
+                        <form method="POST" action="/send1" role="form1", name="predictionform">
+                            <div class="form-group" >
+                                <label for="inputSampleID">Sample ID</label>
+                                <input type="number" class="form-control" id="inputSampleID" name="id" placeholder="Sample ID">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPrecipitation">Precipitation (in)</label>
+                                <input type="number" step="0.001" class="form-control" id="inputPrecipitation" name="precipitation" placeholder="1.23">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputTemperatureMax">Maximum Temperature(F)</label>
+                                <input type="number" step="0.001" class="form-control" id="inputTemperatureMax" name="temperature_max" placeholder="65.0">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputWaterTemperature">Water Temperature(F)</label>
+                                <input type="number" step="0.0001" class="form-control" id="inputWaterTemperature" name="water_temperature" placeholder="65.0">
+                            </div>
+                            <input type="submit" value="submit" class="btn btn-default">
+                        </form>
+                    </div>
+                    <img id = "image">
+                </div>
+    
+            </div>
+    
+        </div>
+    </div>
+    <div class="section" id="section3">
+        <div class="row">
+            <h1 style="text-align: center;">Help Us Improve Our Model</h1>
+            <h3 style="text-align: center;">Input Bacteria Test Data</h3>
+            <div class="container">
+                <div class="row">
+                    <div style="margin-left:50px;" class="col-md-offset-2 col-md-9">
+                        <form method="POST" action="/send" role="form", name="dnaform">
+                            <div class="form-group">
+                                <label for="inputSampleID">Sample ID</label>
+                                <input type="number" class="form-control" id="inputSampleID" name="id" placeholder="Sample ID">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPrecipitation">Precipitation(in)</label>
+                                <input type="number" step="0.001" class="form-control" id="inputPrecipitation" name="precipitation" placeholder="1.23">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputTemperatureMax">Maximum Temperature(F)</label>
+                                <input type="number" step="0.001" class="form-control" id="inputTemperatureMax" name="temperature_max" placeholder="65.0">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputWaterTemperature">Water Temperature(F)</label>
+                                <input type="number" step="0.0001" class="form-control" id="inputWaterTemperature" name="water_temperature" placeholder="65.0">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputDnaSample1">DNA Sample 1</label>
+                                <input type="number" step="0.0001" class="form-control" id="inputDnaSample1" name="dna_sample_1_reading" placeholder="DNA Sample 1">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputDnaSample2">DNA Sample 2</label>
+                                <input type="number" step="0.0001" class="form-control" id="inputDnaSample2" name="dna_sample_2_reading" placeholder="DNA Sample 2">
+                            </div>
+                            <input type="submit" value="submit" class="btn btn-default">
+                        </form>
+                    </div>
+                </div>
+    
+            </div>
+    
+        </div>
+    </div>
+    <div class="section" id="section4">
+        <section class="py-5 text-center container" style="padding-bottom:5px; color: #FFB740; outline-color:#FFB740 ">
+            <div class="row py-lg-5">
+              <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light" style="font-size: 100px; margin-bottom:-40px;">Data Sources</h1>
+                <p style="font-size: 25px; padding-top: 40px; margin-bottom: 10px;">Click on the tiles below to view the source data for this project</p>
+              </div>
+            </div>
+        </section>
+        <div class= "row">
+            <div class="col-lg-6 col-md-4">
+                <div class="card" style="height: 20rem; width:15rem;margin-left:50px;margin-right: 150px;">
+                    <img class="card-img-top" src="https://www.noaa.gov/themes/custom/noaa/images/noaa_logo.png" alt="NOAA" style="height:130px; margin-top:5px;">
+                    <p class="card-text" style="margin-top:70px;margin-bottom:0px;font-weight:bold;">Weather Data</p>
+                    <a href="https://www.ncdc.noaa.gov/cdo-web/" class="btn btn-primary" style="margin: auto;" target="_blank">Visit Site</a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-4">
+                <div class="card" style="height: 20rem; width:15rem;margin-left:50px;margin-right: 150px;">
+                    <img class="card-img-top" src="https://data.cityofchicago.org/api/assets/73F1665C-0FE6-4183-8AD1-E91DB8EFAFA4?7CB02402-8E06-48B0-8C9A-3890182D58C7.png" alt="CDP" style="height:130px;">
+                    <p class="card-text" style="margin-top:70px;margin-bottom:0px;font-weight:bold;">Chicago Beach Data</p>
+                    <a href="https://data.cityofchicago.org/Parks-Recreation/Beach-Lab-Data/2ivx-z93u" class="btn btn-primary" style="margin: auto;" target="_blank">Visit Site</a>
+                </div>
+            </div>
+        </div>  
+    </div>
+	<div class="section" id="section5">
+        <h1 style="text-align: center;font-size: 65px; color:#64C9CF">To view the entire repository, please visit</h1>
+        <a style="font-size: 35px; text-align: center; margin-left: 450px; color:#64C9CF" href="https://github.com/danielatuesta55/E_Coli_Chicago_Beaches" target="_blank">https://github.com/danielatuesta55/E_Coli_Chicago_Beaches</a>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" src="../static/js/fullpage.js"></script>
+<script type="text/javascript">
+	var myFullpage = new fullpage('#fullpage', {
+        licenseKey: null,
+        anchors: ['firstPage', 'secondPage', '3rdPage','4thPage', '5thPage', '6thPage'],
+        sectionsColor: ['#976b30', '#28ABB9', '#28ABB9', '#28ABB9', '#28ABB9'],
+        navigation: true,
+        navigationPosition: 'right',
+        navigationTooltips: ['Home', 'Discussion', 'E. coli Checker', 'Data Submission','Data Sources', 'Repository']
+	});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</body>
+</html>
